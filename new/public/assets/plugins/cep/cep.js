@@ -1,0 +1,29 @@
+$(document).ready( function() {
+   /* Executa a requisição quando o campo CEP perder o foco */
+   $('#cep').blur(function(){
+           /* Configura a requisição AJAX */
+           $.ajax({
+                url : rota.urlBase + 'buscacep', /* URL que será chamada */ 
+                type : 'POST', /* Tipo da requisição */ 
+                data: 'cep=' + $('#cep').val(), /* dado que será enviado via POST */
+                dataType: 'json', /* Tipo de transmissão */
+                success: function(data){
+                    if(data.sucesso == 1){
+                        $('#logradouro').val(data.rua);
+                        $('#bairro').val(data.bairro);
+                        $('#cidade').val(data.cidade);
+                        $('#uf').val(data.estado);
+ 
+                        $('#numero').focus();
+                    }else{
+                        $('#logradouro').val('');
+                        $('#bairro').val('');
+                        $('#cidade').val('');
+                        $('#uf').val('');
+ 
+                    }
+                }
+           });   
+   return false;    
+   })
+});
